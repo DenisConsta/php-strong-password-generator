@@ -2,6 +2,16 @@
 
 require_once __DIR__ . './functions.php';
 
+if(!empty($_GET['length'])){
+  session_start();
+  if(checkLen($_GET['length'])){
+    $_SESSION['res'] = getPassword($_GET['length'], $data);
+  } else
+    $_SESSION['res'] = null;
+
+  header('Location: ./response.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,18 +39,8 @@ require_once __DIR__ . './functions.php';
           <input type="text" class="form-control" id="inputPassword" name="length">
         </div>
       </div>
-      <button class="btn btn-primary">Genera</button>
+      <button class="btn btn-primary" type="submit">Genera</button>
     </form>
-
-    <div class="result py-5">
-      <h5 class="lead">
-        <?php
-        if(checkLen($_GET['length'])) echo getPassword($_GET['length'], $data);
-        else echo "Lunghezza errata !"
-        ?>
-      </h5>
-
-    </div>
 
   </div>
 </body>
